@@ -44,17 +44,6 @@ function initTooltip() {
   }
 }
 
-function loadScript(url) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.async = true;
-    script.onload = resolve;
-    script.onerror = reject;
-    script.src = url;
-    document.body.appendChild(script);
-  });
-}
-
 class Panel {
   constructor(panel) {
     this.panel = panel;
