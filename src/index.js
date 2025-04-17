@@ -44,6 +44,10 @@ function initTooltip() {
   }
 }
 
+async function toBlob(canvas, type, quality) {
+  return await new Promise((resolve) => canvas.toBlob(resolve, type, quality));
+}
+
 class Panel {
   constructor(panel) {
     this.panel = panel;
@@ -192,7 +196,9 @@ class FilterPanel extends LoadPanel {
       const svgs = event.currentTarget.children;
       svgs[0].classList.add("d-none");
       svgs[1].classList.remove("d-none");
-      await navigator.clipboard.writeText(this.convert());
+      await navigator.clipboard.write([
+        new ClipboardItem({ "image/png": toBlob(this.canvas) }),
+      ]);
       setTimeout(() => {
         svgs[0].classList.remove("d-none");
         svgs[1].classList.add("d-none");
