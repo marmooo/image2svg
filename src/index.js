@@ -6,20 +6,13 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@marmooo/color-reducer@0.1.1/+esm";
 import { toSVG } from "https://cdn.jsdelivr.net/npm/@marmooo/imagetracer@0.0.3/+esm";
 
-function loadConfig() {
-  if (localStorage.getItem("darkMode") == 1) {
-    document.documentElement.setAttribute("data-bs-theme", "dark");
-  }
-}
-
 function toggleDarkMode() {
-  if (localStorage.getItem("darkMode") == 1) {
-    localStorage.setItem("darkMode", 0);
-    document.documentElement.setAttribute("data-bs-theme", "light");
-  } else {
-    localStorage.setItem("darkMode", 1);
-    document.documentElement.setAttribute("data-bs-theme", "dark");
-  }
+  const html = document.documentElement;
+  const newTheme = html.getAttribute("data-bs-theme") === "dark"
+    ? "light"
+    : "dark";
+  html.setAttribute("data-bs-theme", newTheme);
+  localStorage.setItem("darkMode", newTheme);
 }
 
 function initLangSelect() {
@@ -477,7 +470,6 @@ class OctreeQuantizationFilter extends Filter {
 
 const filterPanel = new FilterPanel(document.getElementById("filterPanel"));
 const loadPanel = new LoadPanel(document.getElementById("loadPanel"));
-loadConfig();
 initLangSelect();
 initTooltip();
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
